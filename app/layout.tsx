@@ -32,8 +32,11 @@ export const metadata: Metadata = {
   },
   description: 'Site pessoal — artigos, notas e experimentos.',
   icons: {
-    icon: [{ url: '/icon.svg', type: 'image/svg+xml' }],
-    shortcut: ['/icon.svg'],
+    icon: [
+      { url: '/icon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.ico', sizes: '64x64' },
+    ],
+    shortcut: ['/favicon.ico'],
   },
   openGraph: {
     type: 'website',

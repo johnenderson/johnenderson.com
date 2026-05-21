@@ -29,7 +29,6 @@ The site runs at `http://localhost:3000`.
 | `yarn typecheck` | Run TypeScript checks |
 | `yarn prettier:check` | Check formatting |
 | `yarn prettier:fix` | Format supported files |
-| `yarn cypress` | Open Cypress |
 
 `yarn build` uses `next/font` and may need network access to download Geist
 fonts from Google Fonts.
