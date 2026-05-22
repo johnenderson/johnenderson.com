@@ -8,6 +8,8 @@
   --site-foreground: #fbf7ff;
   --site-body: rgba(247, 242, 255, 0.7);
   --site-body-muted: #a59caf;
+  --site-card: rgba(18, 13, 24, 0.92);
+  --site-card-hover: rgba(24, 17, 31, 0.96);
   --site-popover: rgba(15, 11, 22, 0.96);
   --site-navbar: rgba(11, 7, 16, 0.78);
   --site-navbar-scrolled: rgba(11, 7, 16, 0.88);
@@ -25,6 +27,8 @@ html.light {
   --site-foreground: #27212f;
   --site-body: rgba(39, 33, 47, 0.68);
   --site-body-muted: #716978;
+  --site-card: rgb(246, 239, 244);
+  --site-card-hover: rgb(241, 234, 239);
   --site-popover: rgba(251, 249, 255, 0.96);
   --site-navbar: rgba(251, 249, 255, 0.78);
   --site-navbar-scrolled: rgba(251, 249, 255, 0.88);
@@ -43,6 +47,8 @@ html.light {
   --color-site-foreground: var(--site-foreground);
   --color-site-body: var(--site-body);
   --color-site-body-muted: var(--site-body-muted);
+  --color-site-card: var(--site-card);
+  --color-site-card-hover: var(--site-card-hover);
   --color-site-popover: var(--site-popover);
   --color-site-primary: var(--site-primary);
   --color-site-primary-hover: var(--site-primary-hover);

@@ -55,7 +55,7 @@ const TrackArtwork = ({
   if (!track.imageUrl || failed) {
     return (
       <div
-        className="flex shrink-0 items-center justify-center rounded bg-site-primary-soft text-site-body-muted"
+        className="flex shrink-0 items-center justify-center rounded bg-site-card-hover text-site-body-muted"
         style={{ width: size, height: size }}
       >
         <MusicIcon size={Math.max(16, size / 2.5)} />
@@ -128,7 +128,7 @@ export const LastfmCard = () => {
   return (
     <section id="activity" className="mt-10">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
-        <div className="col-span-1 flex min-h-36 flex-col gap-3 rounded-md border border-site-border bg-site-primary-soft p-5 md:col-span-2">
+        <div className="col-span-1 flex min-h-36 flex-col gap-3 rounded-md border border-site-border bg-site-card p-5 md:col-span-2">
           <div className="flex items-center gap-2">
             <h2 className="m-0 text-base font-semibold text-site-foreground">
               {title}
@@ -137,7 +137,7 @@ export const LastfmCard = () => {
           </div>
 
           {loading && (
-            <div className="h-16 w-full animate-pulse rounded bg-site-primary-soft" />
+            <div className="h-16 w-full animate-pulse rounded bg-site-card-hover" />
           )}
 
           {!loading && featuredTrack && (
@@ -172,7 +172,7 @@ export const LastfmCard = () => {
           )}
         </div>
 
-        <div className="col-span-1 flex min-h-36 flex-col gap-3 rounded-md border border-site-border bg-site-primary-soft p-5 md:col-span-2">
+        <div className="col-span-1 flex min-h-36 flex-col gap-3 rounded-md border border-site-border bg-site-card p-5 md:col-span-2">
           <div className="flex items-center gap-2">
             <h2 className="m-0 text-base font-semibold text-site-foreground">
               Últimas faixas
@@ -185,7 +185,7 @@ export const LastfmCard = () => {
               {[0, 1, 2].map((item) => (
                 <div
                   key={item}
-                  className="h-10 animate-pulse rounded bg-site-primary-soft"
+                  className="h-10 animate-pulse rounded bg-site-card-hover"
                 />
               ))}
             </div>
