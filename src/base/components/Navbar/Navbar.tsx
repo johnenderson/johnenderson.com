@@ -123,51 +123,49 @@ export const Navbar = () => {
         />
       )}
 
-      <div
-        id="mobile-navigation"
-        className={`prefs-panel fixed inset-x-0 bottom-0 z-50 flex flex-col gap-3 rounded-t-lg border border-b-0 border-site-border p-3 shadow-2xl transition-all duration-200 md:hidden ${
-          mobileMenuOpen
-            ? 'translate-y-0 opacity-100'
-            : 'pointer-events-none translate-y-full opacity-0'
-        }`}
-      >
-        <div className="mx-auto mt-1 h-1.5 w-24 shrink-0 rounded-full bg-site-primary-soft" />
+      {mobileMenuOpen && (
+        <div
+          id="mobile-navigation"
+          className="prefs-panel fixed inset-x-0 bottom-0 z-50 flex flex-col gap-3 rounded-t-lg border border-b-0 border-site-border p-3 shadow-2xl transition-all duration-200 md:hidden"
+        >
+          <div className="mx-auto mt-1 h-1.5 w-24 shrink-0 rounded-full bg-site-primary-soft" />
 
-        <nav className="flex w-full flex-col">
-          {navLinks.map(({ href, label, icon }) => {
-            const isActive =
-              href === '/' ? pathname === '/' : pathname.startsWith(href);
+          <nav className="flex w-full flex-col">
+            {navLinks.map(({ href, label, icon }) => {
+              const isActive =
+                href === '/' ? pathname === '/' : pathname.startsWith(href);
 
-            return (
-              <Link
-                key={href}
-                href={href}
-                onClick={() => setMobileMenuOpen(false)}
-                className={`flex min-h-12 w-full items-center justify-start gap-3 rounded px-3 text-left font-normal no-underline transition-colors ${
-                  isActive
-                    ? 'text-site-primary'
-                    : 'text-site-foreground hover:bg-site-primary-soft hover:text-site-primary-hover'
-                }`}
-              >
-                <FontAwesomeIcon
-                  icon={icon}
-                  className={`size-5 ${
-                    isActive ? 'text-site-primary' : 'text-site-body-muted'
+              return (
+                <Link
+                  key={href}
+                  href={href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`flex min-h-12 w-full items-center justify-start gap-3 rounded px-3 text-left font-normal no-underline transition-colors ${
+                    isActive
+                      ? 'text-site-primary'
+                      : 'text-site-foreground hover:bg-site-primary-soft hover:text-site-primary-hover'
                   }`}
-                />
-                {label}
-              </Link>
-            );
-          })}
-        </nav>
+                >
+                  <FontAwesomeIcon
+                    icon={icon}
+                    className={`size-5 ${
+                      isActive ? 'text-site-primary' : 'text-site-body-muted'
+                    }`}
+                  />
+                  {label}
+                </Link>
+              );
+            })}
+          </nav>
 
-        <hr className="my-0 w-full border-0 border-t border-site-border-muted" />
+          <hr className="my-0 w-full border-0 border-t border-site-border-muted" />
 
-        <div className="flex w-full items-center justify-start gap-2">
-          <PreferencesPanel panelAlign="left" panelPosition="top" />
-          <LanguageSelector panelAlign="left" panelPosition="top" />
+          <div className="flex w-full items-center justify-start gap-2">
+            <PreferencesPanel panelAlign="left" panelPosition="top" />
+            <LanguageSelector panelAlign="left" panelPosition="top" />
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 };
