@@ -1,7 +1,6 @@
 import { Geist, Geist_Mono } from 'next/font/google';
 
 import '../styles/globals.css';
-import '../styles/night-owl.min.css';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import 'katex/dist/katex.min.css';
@@ -56,7 +55,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pt-BR" className={`${geistSans.variable} ${geistMono.variable}`} suppressHydrationWarning>
+    <html
+      lang="pt-BR"
+      className={`${geistSans.variable} ${geistMono.variable}`}
+      suppressHydrationWarning
+    >
       <body>
         <DevPerformanceMeasurePatch />
         <Providers>{children}</Providers>

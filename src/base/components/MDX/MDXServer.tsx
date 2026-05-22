@@ -1,8 +1,8 @@
 import React from 'react';
 
+import rehypeShiki from '@shikijs/rehype';
 import { compileMDX } from 'next-mdx-remote/rsc';
 import { InlineMath, BlockMath } from 'react-katex';
-import rehypeHighlight from 'rehype-highlight';
 import rehypeSlug from 'rehype-slug';
 import remarkGfm from 'remark-gfm';
 
@@ -54,17 +54,29 @@ const components = {
   Venn,
 };
 
+const rehypeShikiOptions = {
+  theme: 'material-theme-ocean',
+};
+
 interface MDXServerProps {
   source: string;
 }
 
+function withSmoothRender(source: string) {
+  if (source.includes('<SmoothRender')) {
+    return source;
+  }
+
+  return `<SmoothRender>\n\n${source}\n\n</SmoothRender>`;
+}
+
 export async function MDXServer({ source }: MDXServerProps) {
   const { content } = await compileMDX({
-    source,
+    source: withSmoothRender(source),
     components,
     options: {
       mdxOptions: {
-        rehypePlugins: [rehypeSlug, rehypeHighlight],
+        rehypePlugins: [rehypeSlug, [rehypeShiki, rehypeShikiOptions]],
         remarkPlugins: [remarkGfm],
       },
     },

@@ -1,10 +1,10 @@
 import React from 'react';
 
+import rehypeShiki from '@shikijs/rehype';
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize';
 import { InlineMath, BlockMath } from 'react-katex';
 import TweetEmbed from 'react-tweet-embed';
-import rehypeHighlight from 'rehype-highlight';
 import remarkGfm from 'remark-gfm';
 
 import { PostAndDate } from '@/base/components/PostAndDate';
@@ -52,11 +52,15 @@ interface MDXPropTypes {
   content: Content;
 }
 
+const rehypeShikiOptions = {
+  theme: 'material-theme-ocean',
+};
+
 export const serializeMDX = (content: string) =>
   serialize(content, {
     blockJS: false,
     mdxOptions: {
-      rehypePlugins: [rehypeHighlight],
+      rehypePlugins: [[rehypeShiki, rehypeShikiOptions]],
       remarkPlugins: [remarkGfm],
     },
   });

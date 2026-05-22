@@ -20,15 +20,15 @@ The site runs at `http://localhost:3000`.
 
 ## Commands
 
-| Command | Description |
-|---|---|
-| `yarn dev` | Start the development server |
-| `yarn build` | Build the production site |
-| `yarn start` | Start the production server after `yarn build` |
-| `yarn lint` | Run ESLint against `app` and `src` |
-| `yarn typecheck` | Run TypeScript checks |
-| `yarn prettier:check` | Check formatting |
-| `yarn prettier:fix` | Format supported files |
+| Command               | Description                                    |
+| --------------------- | ---------------------------------------------- |
+| `yarn dev`            | Start the development server                   |
+| `yarn build`          | Build the production site                      |
+| `yarn start`          | Start the production server after `yarn build` |
+| `yarn lint`           | Run ESLint against `app` and `src`             |
+| `yarn typecheck`      | Run TypeScript checks                          |
+| `yarn prettier:check` | Check formatting                               |
+| `yarn prettier:fix`   | Format supported files                         |
 
 `yarn build` uses `next/font` and may need network access to download Geist
 fonts from Google Fonts.
@@ -60,35 +60,30 @@ Each article currently lives in:
 
 ```text
 content/<slug>/en/
-├── index.mdx
-└── metadata.json
+└── index.mdx
 ```
 
-Example metadata:
+Example article:
 
-```json
-{
-  "title": "Article title",
-  "description": "Short description",
-  "date": "2026-01-05",
-  "tags": [
-    {
-      "href": "/tags/example",
-      "name": "example"
-    }
-  ],
-  "coverImage": {
-    "src": "/article-slug/cover.jpg",
-    "width": "640",
-    "height": "425",
-    "alt": "Cover image description",
-    "authorHref": "",
-    "authorName": ""
-  }
-}
+```mdx
+---
+title: 'Article title'
+description: 'Short description'
+date: '2026-01-05'
+tags: ['example', 'nextjs', 'performance']
+coverImage:
+  src: '/article-slug/cover.jpg'
+  width: '640'
+  height: '425'
+  alt: 'Cover image description'
+  authorHref: ''
+  authorName: ''
+---
+
+Article body.
 ```
 
-The article body goes in `index.mdx`. Headings receive IDs through the MDX
+The article body goes below the frontmatter. Headings receive IDs through the MDX
 pipeline and are used by the article table of contents.
 
 ## MDX Components
@@ -101,22 +96,18 @@ The MDX renderer supports:
 - `<PostAndDate>`
 - `<SideBySideImages>`
 - `<SideBySideVideos>`
-- `<SmoothRender>`
+- `<SmoothRender>` (applied automatically by the article renderer)
 - `<TweetEmbed>`
 - `<Venn>`
 
 Example:
 
 ```mdx
-<SmoothRender>
-
 Intro paragraph.
 
 <InlineMath math="E = mc^2" />
 
 <BlockMath math="\int_0^\infty e^{-x^2} dx = \frac{\sqrt{\pi}}{2}" />
-
-</SmoothRender>
 ```
 
 ## Preferences

@@ -1,5 +1,6 @@
 import { FC, PropsWithChildren } from 'react';
 
+import { CodeCopyButtons } from '@/base/article/CodeCopyButtons';
 import { CoverImage } from '@/base/article/CoverImage';
 import { Footer } from '@/base/article/Layout/Footer';
 import { Meta } from '@/base/article/Meta';
@@ -62,6 +63,7 @@ export const Layout: FC<PropsWithChildren<LayoutPropTypes>> = ({
               )}
 
               {children}
+              <CodeCopyButtons />
             </article>
 
             <Footer />

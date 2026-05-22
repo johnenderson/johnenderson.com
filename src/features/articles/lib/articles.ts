@@ -1,7 +1,7 @@
+import { ImageProps } from 'next/image';
+
 import fs from 'fs';
 import path from 'path';
-
-import { ImageProps } from 'next/image';
 import readingTime from 'reading-time';
 
 import { Language } from '@/lib/languages';
@@ -24,16 +24,11 @@ export type ArticleAlternative = {
   language: string;
 };
 
-export type ArticleTag = {
-  href: string;
-  name: string;
-};
-
 export type ArticleMetadata = {
   title: string;
   description: string;
   date: string;
-  tags?: ArticleTag[];
+  tags?: string[];
   coverImage: ArticleCoverImage;
   alternativeArticle?: ArticleAlternative;
 };
@@ -46,10 +41,6 @@ export type ArticleListItem = {
 
 function getArticleDir(slug: string, locale: Locale = Language.EN) {
   return path.join(CONTENT_DIR, slug, locale);
-}
-
-function getArticleMetadataPath(slug: string, locale: Locale = Language.EN) {
-  return path.join(getArticleDir(slug, locale), 'metadata.json');
 }
 
 function getArticleContentPath(slug: string, locale: Locale = Language.EN) {
@@ -67,7 +58,9 @@ function stringValue(
 ) {
   const value = source[key];
   if (typeof value !== 'string') {
-    throw new Error(`Invalid article metadata for ${context}: ${key} must be a string.`);
+    throw new Error(
+      `Invalid article metadata for ${context}: ${key} must be a string.`,
+    );
   }
   return value;
 }
@@ -96,7 +89,9 @@ function optionalImageDimension(
 
 function parseCoverImage(value: unknown, context: string): ArticleCoverImage {
   if (!isRecord(value)) {
-    throw new Error(`Invalid article metadata for ${context}: coverImage is required.`);
+    throw new Error(
+      `Invalid article metadata for ${context}: coverImage is required.`,
+    );
   }
 
   return {
@@ -126,29 +121,33 @@ function parseAlternativeArticle(
   };
 }
 
-function parseTags(value: unknown, context: string): ArticleTag[] | undefined {
+function parseTags(value: unknown, context: string): string[] | undefined {
   if (value == null) return undefined;
   if (!Array.isArray(value)) {
-    throw new Error(`Invalid article metadata for ${context}: tags must be an array.`);
+    throw new Error(
+      `Invalid article metadata for ${context}: tags must be an array.`,
+    );
   }
 
   return value.map((tag, index) => {
-    if (!isRecord(tag)) {
+    if (typeof tag !== 'string') {
       throw new Error(
-        `Invalid article metadata for ${context}: tags[${index}] must be an object.`,
+        `Invalid article metadata for ${context}: tags[${index}] must be a string.`,
       );
     }
 
-    return {
-      href: stringValue(tag, 'href', context),
-      name: stringValue(tag, 'name', context),
-    };
+    return tag;
   });
 }
 
-function parseArticleMetadata(value: unknown, context: string): ArticleMetadata {
+function parseArticleMetadata(
+  value: unknown,
+  context: string,
+): ArticleMetadata {
   if (!isRecord(value)) {
-    throw new Error(`Invalid article metadata for ${context}: expected an object.`);
+    throw new Error(
+      `Invalid article metadata for ${context}: expected an object.`,
+    );
   }
 
   return {
@@ -157,25 +156,150 @@ function parseArticleMetadata(value: unknown, context: string): ArticleMetadata 
     date: stringValue(value, 'date', context),
     tags: parseTags(value.tags, context),
     coverImage: parseCoverImage(value.coverImage, context),
-    alternativeArticle: parseAlternativeArticle(value.alternativeArticle, context),
+    alternativeArticle: parseAlternativeArticle(
+      value.alternativeArticle,
+      context,
+    ),
   };
 }
 
-export function hasArticleMetadata(
-  slug: string,
-  locale: Locale = Language.EN,
-) {
-  return fs.existsSync(getArticleMetadataPath(slug, locale));
+function parseInlineArray(value: string) {
+  const trimmed = value.trim();
+  if (!trimmed.startsWith('[') || !trimmed.endsWith(']')) return null;
+
+  const inner = trimmed.slice(1, -1).trim();
+  if (!inner) return [];
+
+  return inner.split(',').map(parseScalar);
+}
+
+function parseScalar(value: string): string {
+  const trimmed = value.trim();
+
+  if (
+    (trimmed.startsWith('"') && trimmed.endsWith('"')) ||
+    (trimmed.startsWith("'") && trimmed.endsWith("'"))
+  ) {
+    return trimmed.slice(1, -1);
+  }
+
+  return trimmed;
+}
+
+function parseValue(value: string) {
+  return parseInlineArray(value) ?? parseScalar(value);
+}
+
+function parseFrontmatter(frontmatter: string, context: string) {
+  const metadata: Record<string, unknown> = {};
+  const lines = frontmatter.split(/\r?\n/);
+
+  for (let index = 0; index < lines.length; index += 1) {
+    const line = lines[index];
+    if (!line.trim()) continue;
+
+    const rootMatch = line.match(/^([A-Za-z][\w-]*):(?:\s*(.*))?$/);
+    if (!rootMatch) {
+      throw new Error(`Invalid article frontmatter for ${context}: ${line}`);
+    }
+
+    const [, key, rawValue = ''] = rootMatch;
+    if (rawValue) {
+      metadata[key] = parseValue(rawValue);
+      continue;
+    }
+
+    if (key === 'tags') {
+      const tags: string[] = [];
+
+      while (lines[index + 1]?.startsWith('  ')) {
+        index += 1;
+        if (!lines[index].startsWith('  - ')) continue;
+
+        const tagLine = lines[index].slice(4);
+        const tagObjectMatch = tagLine.match(/^([A-Za-z][\w-]*):\s*(.*)$/);
+
+        if (!tagObjectMatch) {
+          tags.push(parseScalar(tagLine));
+          continue;
+        }
+
+        const tagObject: Record<string, unknown> = {
+          [tagObjectMatch[1]]: parseScalar(tagObjectMatch[2]),
+        };
+
+        while (lines[index + 1]?.startsWith('    ')) {
+          index += 1;
+          const nestedMatch = lines[index]
+            .trim()
+            .match(/^([A-Za-z][\w-]*):\s*(.*)$/);
+
+          if (nestedMatch) {
+            tagObject[nestedMatch[1]] = parseScalar(nestedMatch[2]);
+          }
+        }
+
+        if (typeof tagObject.name === 'string') {
+          tags.push(tagObject.name);
+        }
+      }
+
+      metadata[key] = tags;
+      continue;
+    }
+
+    const nested: Record<string, unknown> = {};
+    while (lines[index + 1]?.startsWith('  ')) {
+      index += 1;
+      const nestedMatch = lines[index]
+        .trim()
+        .match(/^([A-Za-z][\w-]*):\s*(.*)$/);
+
+      if (!nestedMatch) {
+        throw new Error(
+          `Invalid article frontmatter for ${context}: ${lines[index]}`,
+        );
+      }
+
+      nested[nestedMatch[1]] = parseValue(nestedMatch[2]);
+    }
+
+    metadata[key] = nested;
+  }
+
+  return metadata;
+}
+
+function readArticleFile(slug: string, locale: Locale = Language.EN) {
+  const content = fs.readFileSync(getArticleContentPath(slug, locale), 'utf8');
+  const match = content.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);
+  const context = `${slug}/${locale}`;
+
+  if (!match) {
+    throw new Error(`Missing article frontmatter for ${context}.`);
+  }
+
+  return {
+    content: content.slice(match[0].length),
+    metadata: parseArticleMetadata(
+      parseFrontmatter(match[1], context),
+      context,
+    ),
+  };
+}
+
+export function hasArticleMetadata(slug: string, locale: Locale = Language.EN) {
+  if (!hasArticleContent(slug, locale)) return false;
+
+  const content = fs.readFileSync(getArticleContentPath(slug, locale), 'utf8');
+  return /^---\r?\n[\s\S]*?\r?\n---/.test(content);
 }
 
 export function getArticleMetadata(
   slug: string,
   locale: Locale = Language.EN,
 ): ArticleMetadata {
-  const metadataPath = getArticleMetadataPath(slug, locale);
-  const metadata = JSON.parse(fs.readFileSync(metadataPath, 'utf8')) as unknown;
-
-  return parseArticleMetadata(metadata, `${slug}/${locale}`);
+  return readArticleFile(slug, locale).metadata;
 }
 
 export function hasArticleContent(slug: string, locale: Locale = Language.EN) {
@@ -183,7 +307,7 @@ export function hasArticleContent(slug: string, locale: Locale = Language.EN) {
 }
 
 export function getArticleContent(slug: string, locale: Locale = Language.EN) {
-  const content = fs.readFileSync(getArticleContentPath(slug, locale), 'utf8');
+  const { content } = readArticleFile(slug, locale);
   const { minutes } = readingTime(content);
 
   return {
@@ -203,7 +327,9 @@ export function getArticlePaths(locale: Locale = Language.EN) {
     }));
 }
 
-export function getArticlesList(locale: Locale = Language.EN): ArticleListItem[] {
+export function getArticlesList(
+  locale: Locale = Language.EN,
+): ArticleListItem[] {
   return fs
     .readdirSync(CONTENT_DIR)
     .filter((slug) => hasArticleMetadata(slug, locale))
@@ -216,7 +342,5 @@ export function getArticlesList(locale: Locale = Language.EN): ArticleListItem[]
         date: metadata.date,
       };
     })
-    .sort(
-      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-    );
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
