@@ -17,7 +17,7 @@ preferences, and reading controls.
 |---|---|
 | `/` | Home page |
 | `/writings` | Article index |
-| `/sobre` | About page |
+| `/me` | About page |
 | `/rss.xml` | RSS feed |
 | `/[slug]` | Article page generated from `content/<slug>/en` |
 

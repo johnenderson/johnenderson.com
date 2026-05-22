@@ -40,7 +40,7 @@ fonts from Google Fonts.
 ├── app/                # Next.js App Router routes and providers
 │   ├── [slug]/         # Article pages generated from content
 │   ├── rss.xml/        # RSS route handler
-│   ├── sobre/          # About page
+│   ├── me/             # About page
 │   └── writings/       # Article index
 ├── content/            # Article content and metadata
 ├── src/

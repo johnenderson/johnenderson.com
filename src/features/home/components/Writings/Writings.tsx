@@ -6,7 +6,7 @@ import { listStyle, titleLinkStyle } from './style';
 import { Title } from '@/base/components/Title';
 import { getPostsList } from 'src/lib/getPostsList';
 
-type Header = 'h1' | 'h2';
+type Header = 'h1' | 'h2' | false;
 type WritingsPropTypes = { header?: Header };
 
 export const Writings: FC<WritingsPropTypes> = ({ header = 'h2' }) => {
@@ -14,7 +14,7 @@ export const Writings: FC<WritingsPropTypes> = ({ header = 'h2' }) => {
 
   return (
     <section id="writings">
-      {header === 'h1' ? (
+      {header === false ? null : header === 'h1' ? (
         <Title text="artigos" />
       ) : (
         <Link href="/writings" passHref style={titleLinkStyle}>

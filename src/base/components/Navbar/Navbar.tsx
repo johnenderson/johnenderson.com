@@ -3,13 +3,18 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faNewspaper,
+  faUser,
+} from '@fortawesome/free-solid-svg-icons';
 
 import { LanguageSelector } from './LanguageSelector';
 import { PreferencesPanel } from './PreferencesPanel';
 
 const navLinks = [
-  { href: '/writings', label: 'Artigos' },
-  { href: '/sobre', label: 'Sobre mim' },
+  { href: '/writings', label: 'Artigos', icon: faNewspaper },
+  { href: '/me', label: 'Sobre mim', icon: faUser },
 ];
 
 const MenuIcon = () => (
@@ -55,17 +60,23 @@ export const Navbar = () => {
         <div className="mx-auto flex size-full max-w-5xl items-center">
           <Link
             href="/"
-            className="flex items-center gap-1.5 no-underline hover:opacity-70 transition-opacity text-site-foreground"
+            className="flex items-center gap-1.5 text-2xl no-underline transition-opacity hover:opacity-70 text-site-foreground"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
               <path d="M3 3H21C21.5523 3 22 3.44772 22 4V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3ZM16.4645 15.5355L20 12L16.4645 8.46447L15.0503 9.87868L17.1716 12L15.0503 14.1213L16.4645 15.5355ZM6.82843 12L8.94975 9.87868L7.53553 8.46447L4 12L7.53553 15.5355L8.94975 14.1213L6.82843 12ZM11.2443 17L14.884 7H12.7557L9.11597 17H11.2443Z" />
             </svg>
-            <span className="text-2xl font-normal">
-              johnenderson
+            <span className="font-normal">
+              johnenderson<span className="text-site-body-muted">.dev</span>
             </span>
           </Link>
 
-          <div className="ml-auto hidden items-center h-full md:flex">
+          <div className="-mr-3 ml-auto hidden h-full items-center md:flex">
             <nav className="flex items-center h-full">
               {navLinks.map(({ href, label }) => {
                 const isActive =
@@ -76,8 +87,8 @@ export const Navbar = () => {
                     href={href}
                     className={`flex h-full items-center px-3 font-normal no-underline transition-colors duration-200 ${
                       isActive
-                        ? 'text-site-primary'
-                        : 'text-site-body hover:text-site-primary-hover'
+                        ? 'text-site-foreground'
+                        : 'text-site-body hover:text-site-foreground'
                     }`}
                   >
                     {label}
@@ -86,9 +97,9 @@ export const Navbar = () => {
               })}
             </nav>
 
-            <div className="ml-2 flex items-center gap-1">
-              <LanguageSelector />
+            <div className="ml-1 flex items-center gap-1">
               <PreferencesPanel />
+              <LanguageSelector />
             </div>
           </div>
 
@@ -123,7 +134,7 @@ export const Navbar = () => {
         <div className="mx-auto mt-1 h-1.5 w-24 shrink-0 rounded-full bg-site-primary-soft" />
 
         <nav className="flex w-full flex-col">
-          {navLinks.map(({ href, label }) => {
+          {navLinks.map(({ href, label, icon }) => {
             const isActive =
               href === '/' ? pathname === '/' : pathname.startsWith(href);
 
@@ -132,12 +143,18 @@ export const Navbar = () => {
                 key={href}
                 href={href}
                 onClick={() => setMobileMenuOpen(false)}
-                className={`flex min-h-12 w-full items-center justify-start rounded px-3 text-left font-normal no-underline transition-colors ${
+                className={`flex min-h-12 w-full items-center justify-start gap-3 rounded px-3 text-left font-normal no-underline transition-colors ${
                   isActive
                     ? 'text-site-primary'
                     : 'text-site-foreground hover:bg-site-primary-soft hover:text-site-primary-hover'
                 }`}
               >
+                <FontAwesomeIcon
+                  icon={icon}
+                  className={`size-5 ${
+                    isActive ? 'text-site-primary' : 'text-site-body-muted'
+                  }`}
+                />
                 {label}
               </Link>
             );
@@ -147,8 +164,8 @@ export const Navbar = () => {
         <hr className="my-0 w-full border-0 border-t border-site-border-muted" />
 
         <div className="flex w-full items-center justify-start gap-2">
-          <LanguageSelector panelAlign="left" panelPosition="top" />
           <PreferencesPanel panelAlign="left" panelPosition="top" />
+          <LanguageSelector panelAlign="left" panelPosition="top" />
         </div>
       </div>
     </>

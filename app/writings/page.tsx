@@ -1,6 +1,7 @@
 import { PageWrapper } from '../components/PageWrapper';
 import type { Metadata } from 'next';
 
+import { PageTitle } from '@/base/components/PageTitle';
 import { Writings } from '@/features/home/components/Writings';
 
 export const metadata: Metadata = {
@@ -16,7 +17,8 @@ export default function Page() {
     <PageWrapper>
       <main id="main">
         <div className="content">
-          <Writings header="h1" />
+          <PageTitle title="Artigos" subtitle="Guias, notas e textos pessoais." />
+          <Writings header={false} />
         </div>
       </main>
     </PageWrapper>
