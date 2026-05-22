@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint app Base Home src --ext .ts,.tsx",
+    "lint": "eslint app src --ext .ts,.tsx",
     "prettier:check": "prettier --check '**/*.{ts,tsx}'",
     "prettier:fix": "prettier --write '**/*.{ts,tsx}'",
     "eslint:fix": "eslint --cache --fix",

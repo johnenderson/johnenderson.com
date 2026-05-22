@@ -4,7 +4,7 @@ import { FC } from 'react';
 
 import { Item, ItemProps } from './Item';
 import { titleLinkStyle, listStyle } from './style';
-import { Title } from 'Base/components/Title';
+import { Title } from '@/base/components/Title';
 
 type Header = 'h1' | 'h2';
 

@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import Link from 'next/link';
 
-import { Divider } from 'Base/components/Divider';
-import { SocialIcons } from 'Base/components/SocialIcons';
+import { Divider } from '@/base/components/Divider';
+import { SocialIcons } from '@/base/components/SocialIcons';
 
 export const About: FC = () => (
   <section id="about" className="flex flex-col gap-4">

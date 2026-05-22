@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-import { Theme, useTheme } from 'Base/components/Theme';
+import { Theme, useTheme } from '@/base/components/Theme';
 
 const FONT_SIZES = ['14px', '16px', '17px', '18px', '20px'];
 const DEFAULT_FONT_SIZE = '17px';

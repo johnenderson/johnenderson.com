@@ -1,7 +1,7 @@
-import { PageWrapper } from 'app/components/PageWrapper';
+import { PageWrapper } from '../components/PageWrapper';
 import type { Metadata } from 'next';
 
-import { Writings } from 'Home/components/Writings';
+import { Writings } from '@/features/home/components/Writings';
 
 export const metadata: Metadata = {
   title: 'Artigos',

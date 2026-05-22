@@ -3,7 +3,7 @@ import { FC } from 'react';
 
 import { Post } from './Post';
 import { listStyle, titleLinkStyle } from './style';
-import { Title } from 'Base/components/Title';
+import { Title } from '@/base/components/Title';
 import { getPostsList } from 'src/lib/getPostsList';
 
 type Header = 'h1' | 'h2';

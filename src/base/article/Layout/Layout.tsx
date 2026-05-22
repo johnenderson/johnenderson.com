@@ -1,12 +1,12 @@
 import { FC, PropsWithChildren } from 'react';
 
-import { CoverImage } from 'Base/Article/CoverImage';
-import { Footer } from 'Base/Article/Layout/Footer';
-import { Meta } from 'Base/Article/Meta';
-import { TableOfContents } from 'Base/Article/TableOfContents/TableOfContents';
-import { Title } from 'Base/Article/Title';
-import { AnimationLayout } from 'Base/components/Layout/AnimationLayout';
-import { Navbar } from 'Base/components/Navbar';
+import { CoverImage } from '@/base/article/CoverImage';
+import { Footer } from '@/base/article/Layout/Footer';
+import { Meta } from '@/base/article/Meta';
+import { TableOfContents } from '@/base/article/TableOfContents/TableOfContents';
+import { Title } from '@/base/article/Title';
+import { AnimationLayout } from '@/base/components/Layout/AnimationLayout';
+import { Navbar } from '@/base/components/Navbar';
 import {
   AlternativeArticle as AlternativeArticleType,
   CoverImage as CoverImageType,

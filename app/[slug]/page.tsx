@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getPlaiceholder } from 'plaiceholder';
 
-import { Layout } from 'Base/Article/Layout';
-import { MDXServer } from 'Base/components/MDX/MDXServer';
+import { Layout } from '@/base/article/Layout';
+import { MDXServer } from '@/base/components/MDX/MDXServer';
 import { getPaths } from 'src/lib';
 import { getPostContent, hasPostContent } from 'src/lib/getPostContent';
 import { getPostMetadata, hasPostMetadata } from 'src/lib/getPostMetadata';

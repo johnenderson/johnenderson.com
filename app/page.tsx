@@ -1,12 +1,12 @@
 import type { Metadata } from 'next';
 
-import { AnimationLayout } from 'Base/components/Layout/AnimationLayout';
-import { Navbar } from 'Base/components/Navbar';
-import { Title } from 'Base/components/Title';
-import { About } from 'Home/components/About';
-import { LastfmCard } from 'Home/components/Activity';
-import { SkipLink } from 'Home/components/SkipLink';
-import { Writings } from 'Home/components/Writings';
+import { AnimationLayout } from '@/base/components/Layout/AnimationLayout';
+import { Navbar } from '@/base/components/Navbar';
+import { Title } from '@/base/components/Title';
+import { About } from '@/features/home/components/About';
+import { LastfmCard } from '@/features/home/components/Activity';
+import { SkipLink } from '@/features/home/components/SkipLink';
+import { Writings } from '@/features/home/components/Writings';
 
 export const metadata: Metadata = {
   title: {

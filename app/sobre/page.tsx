@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
 
-import { PageWrapper } from 'app/components/PageWrapper';
+import { PageWrapper } from '../components/PageWrapper';
 
 export const metadata: Metadata = {
   title: 'Sobre mim',

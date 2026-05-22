@@ -7,11 +7,11 @@ import TweetEmbed from 'react-tweet-embed';
 import rehypeHighlight from 'rehype-highlight';
 import remarkGfm from 'remark-gfm';
 
-import { PostAndDate } from 'Base/components/PostAndDate';
-import { SideBySideImages } from 'Base/components/SideBySideImages';
-import { SideBySideVideos } from 'Base/components/SideBySideVideos';
-import { SmoothRender } from 'Base/components/SmoothRender';
-import { Venn } from 'Base/components/Venn';
+import { PostAndDate } from '@/base/components/PostAndDate';
+import { SideBySideImages } from '@/base/components/SideBySideImages';
+import { SideBySideVideos } from '@/base/components/SideBySideVideos';
+import { SmoothRender } from '@/base/components/SmoothRender';
+import { Venn } from '@/base/components/Venn';
 
 /** Coerce MDX children to a string so KaTeX receives a string (it throws on non-string). */
 function mathChildrenToString(children: React.ReactNode): string {

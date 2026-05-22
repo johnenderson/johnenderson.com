@@ -25,7 +25,7 @@ The site runs at `http://localhost:3000`.
 | `yarn dev` | Start the development server |
 | `yarn build` | Build the production site |
 | `yarn start` | Start the production server after `yarn build` |
-| `yarn lint` | Run ESLint against `app`, `Base`, `Home`, and `src` |
+| `yarn lint` | Run ESLint against `app` and `src` |
 | `yarn typecheck` | Run TypeScript checks |
 | `yarn prettier:check` | Check formatting |
 | `yarn prettier:fix` | Format supported files |
@@ -42,14 +42,13 @@ fonts from Google Fonts.
 │   ├── rss.xml/        # RSS route handler
 │   ├── sobre/          # About page
 │   └── writings/       # Article index
-├── Base/               # Shared UI and article components
-│   ├── Article/        # Article layout, metadata, ToC, cover, footer
-│   ├── components/     # Navbar, footer, MDX components, command UI
-│   └── LinksGraph/     # Link graph utilities/components
-├── Home/               # Home and writings-list components
 ├── content/            # Article content and metadata
-├── src/lib/            # Content loading, route generation, metadata helpers
-├── src/types/          # Shared TypeScript types
+├── src/
+│   ├── base/           # Shared UI, article, hooks, and graph components
+│   ├── features/       # Page/domain-specific features
+│   │   └── home/       # Home and writings-list components
+│   ├── lib/            # Content loading, route generation, metadata helpers
+│   └── types/          # Shared TypeScript types
 ├── public/             # Static assets
 └── styles/             # Global CSS and syntax highlighting styles
 ```

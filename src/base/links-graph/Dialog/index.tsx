@@ -1,6 +1,6 @@
 'use client';
 
-import { Layout } from 'Base/LinksGraph/Layout';
+import { Layout } from '@/base/links-graph/Layout';
 
 type DialogPropsType = {
   open: boolean;

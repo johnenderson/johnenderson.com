@@ -2,8 +2,8 @@
 
 import { ReactNode } from 'react';
 
-import { AnimationLayout } from 'Base/components/Layout/AnimationLayout';
-import { Navbar } from 'Base/components/Navbar';
+import { AnimationLayout } from '@/base/components/Layout/AnimationLayout';
+import { Navbar } from '@/base/components/Navbar';
 
 type PageWrapperProps = {
   children: ReactNode;

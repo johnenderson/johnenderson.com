@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { AlternativeArticle } from 'Base/Article/AlternativeArticle';
+import { AlternativeArticle } from '@/base/article/AlternativeArticle';
 import { AlternativeArticle as AlternativeArticleType } from 'src/lib/getPostMetadata';
 
 type MetaPropTypes = {
