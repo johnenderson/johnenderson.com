@@ -7,6 +7,7 @@ import rehypeSlug from 'rehype-slug';
 import remarkGfm from 'remark-gfm';
 
 import { TweetEmbed } from './TweetEmbedClient';
+import { codeBlockMetaTransformer } from './codeBlockMeta';
 import {
   Admonition,
   Danger,
@@ -70,6 +71,7 @@ const components = {
 
 const rehypeShikiOptions = {
   theme: 'rose-pine-moon',
+  transformers: [codeBlockMetaTransformer],
 };
 
 interface MDXServerProps {

@@ -944,6 +944,10 @@ p.no-margin-top {
   position: relative;
 }
 
+.content pre:has(.code-block-header) {
+  padding-top: 4.35rem;
+}
+
 html.light .content pre {
   background: var(--site-code) !important;
   border-color: var(--site-border-subtle);
@@ -1002,6 +1006,42 @@ html.light .content pre code {
 
 .content pre code span {
   background: transparent !important;
+}
+
+.code-block-header {
+  align-items: center;
+  background: color-mix(in srgb, var(--site-card-hover) 82%, transparent);
+  border-bottom: 1px solid var(--site-border-subtle);
+  border-radius: 8px 8px 0 0;
+  color: var(--site-body-muted);
+  display: flex;
+  font-family: var(--font-geist-sans), 'Geist', sans-serif;
+  gap: 0.75rem;
+  inset: 0 0 auto 0;
+  min-height: 2.9rem;
+  padding: 0.75rem 5.4rem 0.75rem 1rem;
+  position: absolute;
+}
+
+.code-block-title {
+  color: var(--site-foreground);
+  font-size: 0.8rem;
+  font-weight: 650;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.code-block-language {
+  border: 1px solid var(--site-border-subtle);
+  border-radius: 999px;
+  color: var(--site-body-muted);
+  font-size: 0.68rem;
+  font-weight: 700;
+  line-height: 1;
+  margin-left: auto;
+  padding: 0.25rem 0.45rem;
+  text-transform: uppercase;
 }
 
 .code-copy-button {

@@ -14,6 +14,31 @@ export function CodeCopyButtons() {
         return () => {};
       }
 
+      const title = pre.dataset.codeTitle;
+      const language = pre.dataset.codeLanguage;
+      let header: HTMLDivElement | undefined;
+
+      if (title || language) {
+        header = document.createElement('div');
+        header.className = 'code-block-header';
+
+        if (title) {
+          const titleElement = document.createElement('span');
+          titleElement.className = 'code-block-title';
+          titleElement.textContent = title;
+          header.appendChild(titleElement);
+        }
+
+        if (language) {
+          const languageElement = document.createElement('span');
+          languageElement.className = 'code-block-language';
+          languageElement.textContent = language;
+          header.appendChild(languageElement);
+        }
+
+        pre.prepend(header);
+      }
+
       const button = document.createElement('button');
       button.type = 'button';
       button.className = 'code-copy-button';
@@ -48,6 +73,7 @@ export function CodeCopyButtons() {
         if (timeout) window.clearTimeout(timeout);
         button.removeEventListener('click', onClick);
         button.remove();
+        header?.remove();
       };
     });
 

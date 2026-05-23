@@ -31,6 +31,9 @@ const groupArticlesByYear = (articles: ArticleListItemType[]) =>
     };
   }, {});
 
+const formatArticleCount = (count: number) =>
+  count === 1 ? '1 artigo' : `${count} artigos`;
+
 export const ArticlesList: FC<ArticlesListProps> = ({
   grouped = false,
   header = 'h2',
@@ -42,6 +45,9 @@ export const ArticlesList: FC<ArticlesListProps> = ({
   const years = Object.keys(articlesByYear).sort(
     (a, b) => Number(b) - Number(a),
   );
+  const tags = Array.from(
+    new Set(articles.flatMap((article) => article.tags)),
+  ).sort((a, b) => a.localeCompare(b));
 
   return (
     <section id="articles" className={header === false ? 'mt-8' : 'mt-20'}>
@@ -64,14 +70,38 @@ export const ArticlesList: FC<ArticlesListProps> = ({
 
       {grouped ? (
         <div className="flex flex-col gap-12">
+          <div className="flex flex-wrap items-center gap-2 text-sm text-site-body-muted">
+            <span>{formatArticleCount(articles.length)}</span>
+            {tags.length > 0 ? (
+              <>
+                <span className="text-site-border">•</span>
+                <ul className="m-0 flex list-none flex-wrap gap-2 p-0">
+                  {tags.map((tag) => (
+                    <li
+                      key={tag}
+                      className="rounded border border-site-border-subtle px-2 py-0.5 text-xs font-medium leading-5"
+                    >
+                      {tag}
+                    </li>
+                  ))}
+                </ul>
+              </>
+            ) : null}
+          </div>
+
           {years.map((year) => (
             <section key={year} aria-labelledby={`articles-${year}`}>
-              <h2
-                id={`articles-${year}`}
-                className="mb-4 mt-0 text-3xl font-bold leading-none text-site-foreground"
-              >
-                {year}
-              </h2>
+              <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
+                <h2
+                  id={`articles-${year}`}
+                  className="m-0 text-3xl font-bold leading-none text-site-foreground"
+                >
+                  {year}
+                </h2>
+                <span className="text-sm font-medium text-site-body-muted">
+                  {formatArticleCount(articlesByYear[year].length)}
+                </span>
+              </div>
               <ul className="m-0 grid list-none gap-3 p-0">
                 {articlesByYear[year].map((article) => (
                   <ArticleListItem

@@ -31,8 +31,15 @@ export async function GET(
     return new Response('Not found', { status: 404 });
   }
 
-  const article = getArticleMetadata(slug);
-  const { minutes } = getArticleContent(slug);
+  let article: ReturnType<typeof getArticleMetadata>;
+  let minutes: number;
+
+  try {
+    article = getArticleMetadata(slug);
+    ({ minutes } = getArticleContent(slug));
+  } catch {
+    return new Response('Not found', { status: 404 });
+  }
 
   return new ImageResponse(
     (

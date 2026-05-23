@@ -55,7 +55,25 @@
       "Read(///wsl.localhost/Ubuntu/home/john/Code/doce.sh/**)",
       "Bash(grep -r \"Gabarito\" //wsl.localhost/Ubuntu/home/john/Code/doce.sh/src/ 2>/dev/null | head -10 && ls //wsl.localhost/Ubuntu/home/john/Code/doce.sh/static/ 2>/dev/null | head -20)",
       "WebFetch(domain:doce.sh)",
-      "Bash(mkdir -p /home/john/Code/johnenderson.dev/app/rss.xml)"
+      "Bash(mkdir -p /home/john/Code/johnenderson.dev/app/rss.xml)",
+      "Bash(git config *)",
+      "Bash(ls //wsl.localhost/Ubuntu/home/john/Code/johnenderson.dev/app/og/ 2>&1)",
+      "Bash(find \"//wsl.localhost/Ubuntu/home/john/Code/johnenderson.dev/src\" -path \"*/components/Layout*\" -type f 2>/dev/null | head -20)",
+      "Bash(xargs grep -l \"^export\")",
+      "Bash(grep -rn \"parseArticleDate\\\\|isValidIsoDate\" \"//wsl.localhost/Ubuntu/home/john/Code/johnenderson.dev/content\" --include=\"*.mdx\" --include=\"*.md\" 2>/dev/null | head -20)",
+      "Bash(grep -rn \"^date:\" \"//wsl.localhost/Ubuntu/home/john/Code/johnenderson.dev/content\" 2>/dev/null | head -30)",
+      "Bash(grep -rn \"data.*meta\\\\|\\\\.meta\" \"//wsl.localhost/Ubuntu/home/john/Code/johnenderson.dev/node_modules/@shikijs/rehype/dist\" 2>/dev/null | head -10)",
+      "Bash(grep -rn \"\\\\.meta\" \"//wsl.localhost/Ubuntu/home/john/Code/johnenderson.dev/node_modules/remark-mdx/lib\" 2>/dev/null | head -10)",
+      "Bash(cat \"//wsl.localhost/Ubuntu/home/john/Code/johnenderson.dev/node_modules/@shikijs/rehype/dist/core-BUhjvszS.mjs\" | grep -A5 -B5 \"data.*meta\\\\|\\\\.meta\" | head -80)",
+      "Bash(grep -n \"replaceWith\\\\|node\\\\.children\\\\|fragment\" \"//wsl.localhost/Ubuntu/home/john/Code/johnenderson.dev/node_modules/@shikijs/rehype/dist/core-BUhjvszS.mjs\" | head -20)",
+      "Bash(grep -n -A10 \"parent\\\\.children\\\\[index\\\\] = fragment\" \"//wsl.localhost/Ubuntu/home/john/Code/johnenderson.dev/node_modules/@shikijs/rehype/dist/core-BUhjvszS.mjs\" | head -20)",
+      "Bash(grep -n -B5 \"parent\\\\.children\\\\[index\\\\] = fragment\" \"//wsl.localhost/Ubuntu/home/john/Code/johnenderson.dev/node_modules/@shikijs/rehype/dist/core-BUhjvszS.mjs\" | head -20)",
+      "Bash(node -e ' *)",
+      "Read(///wsl.localhost/Ubuntu/home/john/Code/johnenderson.dev/app/**)",
+      "Read(///wsl.localhost/Ubuntu/home/john/Code/johnenderson.dev/app/og/**)",
+      "Bash(grep -r \"escapeHtml\\\\|escapeScript\\\\|</script>\\\\|dangerouslySetInnerHTML\" \"//wsl.localhost/Ubuntu/home/john/Code/johnenderson.dev/node_modules/react-dom/cjs/react-dom-server.node.development.js\" 2>/dev/null | head -40)",
+      "Bash(grep -n \"escapeEntities\\\\|escapeHTML\\\\|SCRIPT_REGEX\\\\|script.*escape\\\\|</script\\\\|scriptClosing\" \"//wsl.localhost/Ubuntu/home/john/Code/johnenderson.dev/node_modules/react-dom/cjs/react-dom-server.node.development.js\" 2>/dev/null | head -40)",
+      "Bash(grep -n \"script\\\\|innerHTML\\\\|__html\" \"//wsl.localhost/Ubuntu/home/john/Code/johnenderson.dev/node_modules/react-dom/cjs/react-dom-server.node.development.js\" 2>/dev/null | grep -i \"escape\\\\|sanitize\\\\|encod\" | head -20)"
     ]
   }
 }

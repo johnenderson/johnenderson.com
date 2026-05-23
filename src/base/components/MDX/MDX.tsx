@@ -7,6 +7,7 @@ import { InlineMath, BlockMath } from 'react-katex';
 import TweetEmbed from 'react-tweet-embed';
 import remarkGfm from 'remark-gfm';
 
+import { codeBlockMetaTransformer } from '@/base/components/MDX/codeBlockMeta';
 import { PostAndDate } from '@/base/components/PostAndDate';
 import { SideBySideImages } from '@/base/components/SideBySideImages';
 import { SideBySideVideos } from '@/base/components/SideBySideVideos';
@@ -54,6 +55,7 @@ interface MDXPropTypes {
 
 const rehypeShikiOptions = {
   theme: 'rose-pine-moon',
+  transformers: [codeBlockMetaTransformer],
 };
 
 export const serializeMDX = (content: string) =>

@@ -1,4 +1,5 @@
 import type { ImageProps } from 'next/image';
+import { cache } from 'react';
 
 import readingTime from 'reading-time';
 
@@ -99,6 +100,7 @@ function stringValue(
   source: Record<string, unknown>,
   key: string,
   context: string,
+  { allowEmpty = false }: { allowEmpty?: boolean } = {},
 ) {
   const value = source[key];
   if (typeof value !== 'string') {
@@ -106,7 +108,7 @@ function stringValue(
       `Invalid article metadata for ${context}: ${key} must be a string.`,
     );
   }
-  if (!value.trim()) {
+  if (!allowEmpty && !value.trim()) {
     throw new Error(
       `Invalid article metadata for ${context}: ${key} cannot be empty.`,
     );
@@ -147,7 +149,7 @@ function parseCoverImage(value: unknown, context: string): ArticleCoverImage {
     src: stringValue(value, 'src', context),
     width: optionalImageDimension(value, 'width'),
     height: optionalImageDimension(value, 'height'),
-    alt: stringValue(value, 'alt', context),
+    alt: stringValue(value, 'alt', context, { allowEmpty: true }),
     authorHref: optionalStringValue(value, 'authorHref') ?? '',
     authorName: optionalStringValue(value, 'authorName') ?? '',
   };
@@ -334,31 +336,30 @@ function parseFrontmatter(frontmatter: string, context: string) {
   return metadata;
 }
 
-function readArticleFile(
-  slug: string,
-  locale: Locale = DEFAULT_ARTICLE_LOCALE,
-) {
-  const source = getArticleSource(slug, locale);
-  const context = `${slug}/${locale}`;
+const readArticleFile = cache(
+  (slug: string, locale: Locale = DEFAULT_ARTICLE_LOCALE) => {
+    const source = getArticleSource(slug, locale);
+    const context = `${slug}/${locale}`;
 
-  if (!source) {
-    throw new Error(`Missing article content for ${context}.`);
-  }
+    if (!source) {
+      throw new Error(`Missing article content for ${context}.`);
+    }
 
-  const match = source.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);
+    const match = source.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);
 
-  if (!match) {
-    throw new Error(`Missing article frontmatter for ${context}.`);
-  }
+    if (!match) {
+      throw new Error(`Missing article frontmatter for ${context}.`);
+    }
 
-  return {
-    content: source.slice(match[0].length),
-    metadata: parseArticleMetadata(
-      parseFrontmatter(match[1], context),
-      context,
-    ),
-  };
-}
+    return {
+      content: source.slice(match[0].length),
+      metadata: parseArticleMetadata(
+        parseFrontmatter(match[1], context),
+        context,
+      ),
+    };
+  },
+);
 
 export function hasArticleMetadata(
   slug: string,
@@ -392,7 +393,7 @@ export function getArticleContent(
 
   return {
     content,
-    minutes: Math.round(minutes),
+    minutes: Math.max(1, Math.round(minutes)),
   };
 }
 
@@ -404,30 +405,31 @@ export function getArticlePaths(locale: Locale = DEFAULT_ARTICLE_LOCALE) {
   }));
 }
 
-export function getArticlesList(
-  locale: Locale = DEFAULT_ARTICLE_LOCALE,
-): ArticleListItem[] {
-  return getArticleSlugs(locale)
-    .filter((slug) => hasArticleMetadata(slug, locale))
-    .map((slug) => {
-      const { content, metadata } = readArticleFile(slug, locale);
-      const { minutes } = readingTime(content);
+export const getArticlesList = cache(
+  (locale: Locale = DEFAULT_ARTICLE_LOCALE): ArticleListItem[] => {
+    return getArticleSlugs(locale)
+      .filter((slug) => hasArticleMetadata(slug, locale))
+      .map((slug) => {
+        const { content, metadata } = readArticleFile(slug, locale);
+        const { minutes } = readingTime(content);
 
-      return {
-        slug,
-        title: metadata.title,
-        date: metadata.date,
-        description: metadata.description,
-        icon: metadata.icon,
-        minutes: Math.max(1, Math.round(minutes)),
-        tags: metadata.tags ?? [],
-      };
-    })
-    .sort(
-      (a, b) =>
-        parseArticleDate(b.date).getTime() - parseArticleDate(a.date).getTime(),
-    );
-}
+        return {
+          slug,
+          title: metadata.title,
+          date: metadata.date,
+          description: metadata.description,
+          icon: metadata.icon,
+          minutes: Math.max(1, Math.round(minutes)),
+          tags: metadata.tags ?? [],
+        };
+      })
+      .sort(
+        (a, b) =>
+          parseArticleDate(b.date).getTime() -
+          parseArticleDate(a.date).getTime(),
+      );
+  },
+);
 
 const toNavigationItem = (
   article: ArticleListItem | undefined,
