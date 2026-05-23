@@ -1019,7 +1019,7 @@ html.light .content pre code {
   gap: 0.75rem;
   inset: 0 0 auto 0;
   min-height: 2.9rem;
-  padding: 0.75rem 5.4rem 0.75rem 1rem;
+  padding: 0.75rem 3.25rem 0.75rem 1rem;
   position: absolute;
 }
 
@@ -1027,6 +1027,7 @@ html.light .content pre code {
   color: var(--site-foreground);
   font-size: 0.8rem;
   font-weight: 650;
+  min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -1039,27 +1040,33 @@ html.light .content pre code {
   font-size: 0.68rem;
   font-weight: 700;
   line-height: 1;
-  margin-left: auto;
   padding: 0.25rem 0.45rem;
   text-transform: uppercase;
 }
 
 .code-copy-button {
+  align-items: center;
   background: color-mix(in srgb, var(--site-code) 86%, transparent);
   border: 1px solid var(--site-border-subtle);
   border-radius: 6px;
   color: var(--site-body);
   cursor: pointer;
-  font-family: var(--font-geist-sans), 'Geist', sans-serif;
-  font-size: 12px;
-  line-height: 1;
+  display: inline-flex;
+  justify-content: center;
+  line-height: 0;
   opacity: 0;
-  padding: 0.5rem 0.6rem;
+  padding: 0.4rem;
   position: absolute;
   right: 0.75rem;
   top: 0.75rem;
   transition: background-color 150ms ease, border-color 150ms ease,
     color 150ms ease, opacity 150ms ease, transform 220ms var(--ease-elastic);
+}
+
+.code-copy-button svg {
+  display: block;
+  height: 16px;
+  width: 16px;
 }
 
 .content pre:hover .code-copy-button,
@@ -1075,6 +1082,14 @@ html.light .content pre code {
   color: var(--site-primary-hover);
   outline: none;
   transform: translateY(-1px);
+}
+
+.code-copy-button.is-copied,
+.code-copy-button.is-copied:hover,
+.code-copy-button.is-copied:focus-visible {
+  background: color-mix(in srgb, var(--site-primary) 16%, transparent);
+  border-color: var(--site-primary);
+  color: var(--site-primary);
 }
 
 a.link {
