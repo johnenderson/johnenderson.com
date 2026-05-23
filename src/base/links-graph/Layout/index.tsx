@@ -18,7 +18,7 @@ export const Layout: FC<PropsWithChildren<LayoutPropTypes>> = ({
     >
       {title ? (
         <header>
-          <p className="tracking-[0.01em] text-[2em] not-italic font-bold text-white block mt-0 mb-0 normal-case leading-[1.25] light:text-[#333]">
+          <p className="tracking-[0.01em] text-[2em] not-italic font-bold text-site-foreground block mt-0 mb-0 normal-case leading-[1.25]">
             {title}
           </p>
         </header>

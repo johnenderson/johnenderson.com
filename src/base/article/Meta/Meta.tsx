@@ -60,7 +60,7 @@ export const Meta: FC<MetaPropTypes> = ({
   minutes,
 }) => (
   <div className="mt-1.5">
-    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.8rem] text-[#555] light:text-[#999]">
+    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.8rem] text-site-body-muted">
       {date && (
         <span className="flex items-center gap-1.5">
           <CalendarIcon />
@@ -74,7 +74,7 @@ export const Meta: FC<MetaPropTypes> = ({
       )}
       {date && minutes ? (
         <span className="flex items-center gap-1.5">
-          <span className="text-[#333] light:text-[#ccc]">•</span>
+          <span className="text-site-border">•</span>
           <ClockIcon />
           <span>{minutes} min de leitura</span>
         </span>

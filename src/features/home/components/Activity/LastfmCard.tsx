@@ -160,7 +160,7 @@ export const LastfmCard = () => {
     <section id="activity" className="mt-12 md:mt-14">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
         <FadeIn
-          className="col-span-1 flex min-h-36 flex-col gap-4 rounded-md border border-site-border bg-site-card p-4 transition duration-200 hover:-translate-y-0.5 hover:border-site-primary hover:bg-site-card-hover sm:p-5 md:col-span-2"
+          className="col-span-1 flex min-h-36 flex-col gap-4 rounded-md border border-site-border-muted bg-site-card p-4 shadow-sm shadow-transparent transition duration-200 hover:-translate-y-0.5 hover:border-site-border hover:bg-site-card-hover light:shadow-[var(--site-card-shadow)] sm:p-5 md:col-span-2"
           duration={500}
         >
           <div className="flex flex-wrap items-center justify-between gap-2">
@@ -221,7 +221,7 @@ export const LastfmCard = () => {
         </FadeIn>
 
         <FadeIn
-          className="col-span-1 flex min-h-36 flex-col gap-4 rounded-md border border-site-border bg-site-card p-4 transition duration-200 hover:-translate-y-0.5 hover:border-site-primary hover:bg-site-card-hover sm:p-5 md:col-span-2"
+          className="col-span-1 flex min-h-36 flex-col gap-4 rounded-md border border-site-border-muted bg-site-card p-4 shadow-sm shadow-transparent transition duration-200 hover:-translate-y-0.5 hover:border-site-border hover:bg-site-card-hover light:shadow-[var(--site-card-shadow)] sm:p-5 md:col-span-2"
           delay={100}
           duration={500}
         >

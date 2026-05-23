@@ -7,7 +7,7 @@ type TitleProps = {
 };
 
 export const Title: FC<TitleProps> = ({ text }) => (
-  <h1 className="tracking-[0.01em] text-[2.2em] not-italic font-bold text-white mt-12 mb-[0.1rem] block light:text-[#333]">
+  <h1 className="tracking-[0.01em] text-[2.2em] not-italic font-bold text-site-foreground mt-12 mb-[0.1rem] block">
     {text}
   </h1>
 );
