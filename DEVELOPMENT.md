@@ -111,6 +111,7 @@ The MDX renderer supports:
 - Syntax highlighting via Shiki
 - Math with `<InlineMath>` and `<BlockMath>`
 - `<Admonition>`, `<Info>`, `<Note>`, `<Tip>`, `<Warning>`, and `<Danger>`
+- `<Image>` (article body images — see below)
 - `<PostAndDate>`
 - `<SideBySideImages>`
 - `<SideBySideVideos>`
@@ -126,6 +127,22 @@ Intro paragraph.
 <InlineMath math="E = mc^2" />
 
 <BlockMath math="\int_0^\infty e^{-x^2} dx = \frac{\sqrt{\pi}}{2}" />
+```
+
+### Images
+
+Use `<Image>` for images in the article body. Only `src` is required — the
+component reads the file from `public/` to derive its dimensions and blur
+placeholder automatically, fills the column width, and preserves the original
+aspect ratio. `alt` and `caption` are optional; `priority` opts the image into
+eager loading (use it only for an above-the-fold image).
+
+```mdx
+<Image
+  src="/article-slug/photo.jpg"
+  alt="Description"
+  caption="Optional caption"
+/>
 ```
 
 ## Development-only Routes

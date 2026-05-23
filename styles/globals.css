@@ -257,6 +257,45 @@ html.light {
   z-index: 1;
 }
 
+.tldr-card {
+  --tldr-accent: var(--site-primary);
+  background: radial-gradient(
+      circle at 14% 0%,
+      color-mix(in srgb, var(--tldr-accent) 16%, transparent),
+      transparent 42%
+    ),
+    var(--site-card);
+  border-color: var(--site-border-muted);
+  position: relative;
+  overflow: hidden;
+}
+
+.tldr-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  box-shadow: inset 0 1px 0
+    color-mix(in srgb, var(--site-foreground) 7%, transparent);
+}
+
+.tldr-card:hover,
+.tldr-card:focus-within {
+  border-color: color-mix(in srgb, var(--tldr-accent) 68%, var(--site-border));
+}
+
+.tldr-card-icon {
+  background: color-mix(in srgb, var(--tldr-accent) 18%, transparent);
+  border: 1px solid color-mix(in srgb, var(--tldr-accent) 44%, transparent);
+  color: var(--tldr-accent);
+  box-shadow: 0 0 22px color-mix(in srgb, var(--tldr-accent) 16%, transparent);
+}
+
+.tldr-card-label {
+  color: color-mix(in srgb, var(--tldr-accent) 76%, var(--site-foreground));
+}
+
 .interactive-row {
   transition: background-color 180ms ease, color 180ms ease,
     transform 320ms var(--ease-elastic);
@@ -531,6 +570,33 @@ article h3:hover .heading-anchor,
 .heading-anchor:focus-visible {
   color: var(--site-primary-hover);
   outline: none;
+}
+
+.content figure.article-image {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin: 2rem 0;
+}
+
+.content figure.article-image figcaption {
+  align-items: center;
+  color: var(--site-body-muted);
+  display: flex;
+  flex-direction: column;
+  font-size: 0.85rem;
+  gap: 0.15rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.content figure.article-image figcaption a {
+  color: var(--site-body-muted);
+}
+
+.article-image-credit {
+  font-size: 0.78rem;
+  opacity: 0.85;
 }
 
 .reading-progress {
