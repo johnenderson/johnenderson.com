@@ -6,8 +6,8 @@ import { ArticlesList } from '@/features/articles/components/ArticlesList';
 import { DEFAULT_OG_IMAGE } from '@/lib/site';
 
 export const metadata: Metadata = {
-  title: 'Artigos',
-  description: 'Artigos por John Enderson',
+  title: 'Blog',
+  description: 'Guias, notas e textos pessoais por John Enderson',
   openGraph: {
     images: [{ url: DEFAULT_OG_IMAGE }],
   },
@@ -20,9 +20,14 @@ export default function Page() {
         <div className="content">
           <PageTitle
             title="Artigos"
-            subtitle="Guias, notas e textos pessoais."
+            subtitle="Guias, tutoriais e notas pessoais."
           />
-          <ArticlesList header={false} />
+          <ArticlesList
+            grouped
+            header={false}
+            itemVariant="compact"
+            showTags={false}
+          />
         </div>
       </main>
     </PageWrapper>
