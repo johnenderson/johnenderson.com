@@ -39,6 +39,9 @@ fonts from Google Fonts.
 .
 ├── app/                # Next.js App Router routes and providers
 │   ├── [slug]/         # Article pages generated from content
+│   ├── og/             # Dynamic Open Graph image routes (articles + site pages)
+│   ├── og-preview/     # Dev-only OG image preview (404 in production)
+│   ├── error-test/     # Dev-only route to preview the error boundary
 │   ├── rss.xml/        # RSS route handler
 │   ├── me/             # About page
 │   └── writings/       # Article index
@@ -124,6 +127,28 @@ Intro paragraph.
 
 <BlockMath math="\int_0^\infty e^{-x^2} dx = \frac{\sqrt{\pi}}{2}" />
 ```
+
+## Development-only Routes
+
+Some routes exist purely to help debug the site locally. They check
+`process.env.NODE_ENV` and return a `404` (via `notFound()`) in any
+non-development environment, so they are never reachable in production. They are
+also listed under `disallow` in `app/robots.ts` for consistency.
+
+| Route                | Purpose                                                                                                                    |
+| -------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `/og-preview/<slug>` | Renders the dynamic Open Graph image for an article inside an HTML page, with links to open the article and the raw image. |
+| `/error-test`        | Throws on render so you can preview the `app/error.tsx` error boundary UI.                                                 |
+
+Notes:
+
+- For `/error-test`, the Next.js dev server shows a full-screen error overlay on
+  top of the page. Dismiss it (press `Esc` or close it) to see the styled
+  `app/error.tsx` page underneath. The real, overlay-free appearance is what
+  ships in production.
+- `app/error.tsx` handles route-segment errors (keeps the navbar/layout), while
+  `app/global-error.tsx` only triggers if the root layout itself throws and is
+  effectively only observable in production.
 
 ## Preferences
 

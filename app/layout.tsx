@@ -4,7 +4,7 @@ import '../styles/globals.css';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import 'katex/dist/katex.min.css';
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 
 import { DevPerformanceMeasurePatch } from './components/DevPerformanceMeasurePatch';
 import { Providers } from './providers';
@@ -32,6 +32,11 @@ export const metadata: Metadata = {
     template: `%s | ${SITE_NAME}`,
   },
   description: 'Site pessoal — artigos, notas e experimentos.',
+  alternates: {
+    types: {
+      'application/rss+xml': `${SITE_URL}/rss.xml`,
+    },
+  },
   icons: {
     icon: [
       { url: '/icon.svg', type: 'image/svg+xml' },
@@ -48,6 +53,13 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#fffdf9' },
+    { media: '(prefers-color-scheme: dark)', color: '#09080d' },
+  ],
 };
 
 export default function RootLayout({
