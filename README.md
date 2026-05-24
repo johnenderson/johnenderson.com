@@ -1,4 +1,4 @@
-# ojohn.sh
+# ojohn.dev
 
 Personal website with a home page, long-form articles, RSS feed, theme
 preferences, and reading controls.

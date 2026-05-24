@@ -1,6 +1,6 @@
 # Development
 
-Development notes for `ojohn.sh`.
+Development notes for `ojohn.dev`.
 
 ## Requirements
 
