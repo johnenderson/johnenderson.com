@@ -1,7 +1,7 @@
-import Link from 'next/link';
 import { ReactNode } from 'react';
 
 import { PageWrapper } from './components/PageWrapper';
+import { Card } from '@/base/components/Card';
 
 const HomeIcon = () => (
   <svg
@@ -44,9 +44,10 @@ const NotFoundCard = ({
   description,
   icon,
 }: NotFoundCardProps) => (
-  <Link
+  <Card
     href={href}
-    className="interactive-card article-card-glass group block rounded-md border border-site-border-muted p-4 no-underline focus-visible:outline-none"
+    interactive
+    className="article-card-glass group p-4 focus-visible:outline-none"
   >
     <div className="article-card-content flex items-start gap-3">
       <span className="mt-1 shrink-0 leading-none text-site-primary">
@@ -64,7 +65,7 @@ const NotFoundCard = ({
         </p>
       </div>
     </div>
-  </Link>
+  </Card>
 );
 
 export default function NotFound() {

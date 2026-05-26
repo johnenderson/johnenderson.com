@@ -4,6 +4,7 @@ import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { faFire } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import { Card } from '@/base/components/Card';
 import { getGithubPulse } from '@/lib/github';
 
 const formatRelativeTime = (iso: string) => {
@@ -53,7 +54,7 @@ export async function DevPulse() {
 
   return (
     <section id="dev-pulse" className="mt-12 md:mt-14">
-      <div className="interactive-card flex flex-col gap-5 rounded-md border border-site-border-muted bg-site-card p-4 sm:p-5">
+      <Card interactive className="flex flex-col gap-5 p-4 sm:p-5">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2">
             <h2 className="m-0 text-base font-semibold text-site-foreground">
@@ -123,7 +124,7 @@ export async function DevPulse() {
             )}
           </Stat>
         </div>
-      </div>
+      </Card>
     </section>
   );
 }

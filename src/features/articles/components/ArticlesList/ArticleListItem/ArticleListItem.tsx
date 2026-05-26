@@ -1,5 +1,6 @@
-import Link from 'next/link';
 import { FC } from 'react';
+
+import { Card } from '@/base/components/Card';
 
 type PostPropType = {
   datetime: string;
@@ -29,9 +30,10 @@ export const ArticleListItem: FC<PostPropType> = ({
   if (isCompact) {
     return (
       <li>
-        <Link
+        <Card
           href={link}
-          className="interactive-card article-card-glass group block rounded-md border border-site-border-muted p-4 no-underline focus-visible:outline-none sm:p-5"
+          interactive
+          className="article-card-glass group p-4 focus-visible:outline-none sm:p-5"
         >
           <div className="article-card-content flex items-start gap-4">
             {icon ? (
@@ -55,16 +57,17 @@ export const ArticleListItem: FC<PostPropType> = ({
               </p>
             </div>
           </div>
-        </Link>
+        </Card>
       </li>
     );
   }
 
   return (
     <li>
-      <Link
+      <Card
         href={link}
-        className="interactive-card article-card-glass group block rounded-md border border-site-border-muted p-5 no-underline focus-visible:outline-none"
+        interactive
+        className="article-card-glass group p-5 focus-visible:outline-none"
       >
         <div className="article-card-content">
           <div className="flex items-start gap-2">
@@ -100,7 +103,7 @@ export const ArticleListItem: FC<PostPropType> = ({
             </ul>
           )}
         </div>
-      </Link>
+      </Card>
     </li>
   );
 };

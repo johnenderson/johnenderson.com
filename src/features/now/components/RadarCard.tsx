@@ -1,5 +1,6 @@
-import Link from 'next/link';
 import type { ReactNode } from 'react';
+
+import { Card } from '@/base/components/Card';
 
 type RadarCardProps = {
   label: string;
@@ -25,20 +26,25 @@ export const RadarCard = ({ label, title, children, href }: RadarCardProps) => {
   );
 
   const className =
-    'interactive-card block h-full rounded-md border border-site-border-muted bg-site-card p-5 no-underline transition-colors hover:border-site-primary hover:bg-site-card-hover';
+    'h-full p-5 transition-colors hover:border-site-primary hover:bg-site-card-hover';
 
   if (href) {
     return (
-      <Link
+      <Card
         href={href}
         target="_blank"
         rel="noopener noreferrer"
+        interactive
         className={className}
       >
         {content}
-      </Link>
+      </Card>
     );
   }
 
-  return <div className={className}>{content}</div>;
+  return (
+    <Card interactive className={className}>
+      {content}
+    </Card>
+  );
 };

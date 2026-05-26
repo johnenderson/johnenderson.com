@@ -1,11 +1,11 @@
 import Image from 'next/image';
-import Link from 'next/link';
 
+import { Card } from '@/base/components/Card';
 import { ArtistFallback } from '@/features/now/components/MusicFallback';
 import { LastfmArtist } from '@/types/Lastfm';
 
 export const ArtistCard = ({ artist }: { artist: LastfmArtist }) => (
-  <Link
+  <Card
     href={
       artist.imageSource === 'spotify' && artist.spotifyUrl
         ? artist.spotifyUrl
@@ -15,7 +15,9 @@ export const ArtistCard = ({ artist }: { artist: LastfmArtist }) => (
     rel="noopener noreferrer"
     aria-label={`${artist.name}, ${artist.playcount} plays na semana`}
     title={`${artist.name} - ${artist.playcount} plays na semana`}
-    className="interactive-card group relative block overflow-visible rounded-md border border-site-border-muted bg-site-card no-underline transition-colors hover:z-20 hover:border-site-primary focus-visible:z-20"
+    interactive
+    overflow="visible"
+    className="group overflow-visible transition-colors hover:z-20 hover:border-site-primary focus-visible:z-20"
   >
     <div className="relative aspect-square overflow-hidden rounded-md bg-site-card-hover">
       {artist.imageUrl ? (
@@ -39,5 +41,5 @@ export const ArtistCard = ({ artist }: { artist: LastfmArtist }) => (
         {artist.playcount} plays
       </span>
     </span>
-  </Link>
+  </Card>
 );

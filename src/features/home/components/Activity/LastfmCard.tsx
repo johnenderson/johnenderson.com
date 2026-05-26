@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { CSSProperties, ReactNode, useEffect, useState } from 'react';
 
+import { Card } from '@/base/components/Card';
 import { LastfmStats, LastfmTrack } from '@/types/Lastfm';
 
 type LastfmNowPlayingResponse = {
@@ -188,108 +189,111 @@ export const LastfmCard = () => {
   return (
     <section id="activity" className="mt-12 md:mt-14">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
-        <FadeIn
-          className="interactive-card col-span-1 flex min-h-36 flex-col gap-4 rounded-md border border-site-border-muted bg-site-card p-4 sm:p-5 md:col-span-2"
-          duration={500}
-        >
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <div className="flex items-center gap-2">
-              <h2 className="m-0 text-base font-semibold text-site-foreground">
-                {title}
-              </h2>
-              <DiscIcon />
-            </div>
-            {lastfm?.nowPlaying && <LiveBadge />}
-          </div>
-
-          {loading && (
-            <div className="h-16 w-full animate-pulse rounded bg-site-card-hover" />
-          )}
-
-          {!loading && featuredTrack && (
-            <div className="flex min-w-0 items-start gap-3 sm:gap-4">
-              <TrackArtwork eager track={featuredTrack} />
-              <div className="flex min-w-0 flex-col">
-                <Link
-                  href={featuredTrack.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="truncate text-lg font-bold no-underline transition-colors hover:text-site-primary-hover focus-visible:text-site-primary-hover focus-visible:outline-none"
-                  title={featuredTrack.name}
-                >
-                  {featuredTrack.name}
-                </Link>
-                {featuredTrack.album && (
-                  <p className="m-0 truncate text-sm text-site-body">
-                    {featuredTrack.album}
-                  </p>
-                )}
-                <p className="m-0 truncate text-sm text-site-body">
-                  {featuredTrack.artist}
-                </p>
+        <FadeIn className="col-span-1 md:col-span-2" duration={500}>
+          <Card
+            interactive
+            className="flex h-full min-h-36 flex-col gap-4 p-4 sm:p-5"
+          >
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <div className="flex items-center gap-2">
+                <h2 className="m-0 text-base font-semibold text-site-foreground">
+                  {title}
+                </h2>
+                <DiscIcon />
               </div>
+              {lastfm?.nowPlaying && <LiveBadge />}
             </div>
-          )}
 
-          {!loading && !featuredTrack && (
-            <p className="m-0 text-sm text-site-body-muted">
-              Nenhuma música recente encontrada.
-            </p>
-          )}
+            {loading && (
+              <div className="h-16 w-full animate-pulse rounded bg-site-card-hover" />
+            )}
 
-          {featuredTrack && (
-            <Link
-              href={featuredTrack.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-auto w-fit text-xs font-medium text-site-body-muted no-underline transition-colors hover:text-site-primary-hover focus-visible:text-site-primary-hover focus-visible:outline-none"
-            >
-              Ver no Last.fm
-            </Link>
-          )}
+            {!loading && featuredTrack && (
+              <div className="flex min-w-0 items-start gap-3 sm:gap-4">
+                <TrackArtwork eager track={featuredTrack} />
+                <div className="flex min-w-0 flex-col">
+                  <Link
+                    href={featuredTrack.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="truncate text-lg font-bold no-underline transition-colors hover:text-site-primary-hover focus-visible:text-site-primary-hover focus-visible:outline-none"
+                    title={featuredTrack.name}
+                  >
+                    {featuredTrack.name}
+                  </Link>
+                  {featuredTrack.album && (
+                    <p className="m-0 truncate text-sm text-site-body">
+                      {featuredTrack.album}
+                    </p>
+                  )}
+                  <p className="m-0 truncate text-sm text-site-body">
+                    {featuredTrack.artist}
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {!loading && !featuredTrack && (
+              <p className="m-0 text-sm text-site-body-muted">
+                Nenhuma música recente encontrada.
+              </p>
+            )}
+
+            {featuredTrack && (
+              <Link
+                href={featuredTrack.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-auto w-fit text-xs font-medium text-site-body-muted no-underline transition-colors hover:text-site-primary-hover focus-visible:text-site-primary-hover focus-visible:outline-none"
+              >
+                Ver no Last.fm
+              </Link>
+            )}
+          </Card>
         </FadeIn>
 
-        <FadeIn
-          className="interactive-card col-span-1 flex min-h-36 flex-col gap-4 rounded-md border border-site-border-muted bg-site-card p-4 sm:p-5 md:col-span-2"
-          delay={100}
-          duration={500}
-        >
-          <div className="flex items-center gap-2">
-            <h2 className="m-0 text-base font-semibold text-site-foreground">
-              Últimas faixas
-            </h2>
-            <MusicIcon />
-          </div>
-
-          {loading && (
-            <div className="space-y-3">
-              {[0, 1, 2].map((item) => (
-                <div
-                  key={item}
-                  className="h-10 animate-pulse rounded bg-site-card-hover"
-                />
-              ))}
+        <FadeIn className="col-span-1 md:col-span-2" delay={100} duration={500}>
+          <Card
+            interactive
+            className="flex h-full min-h-36 flex-col gap-4 p-4 sm:p-5"
+          >
+            <div className="flex items-center gap-2">
+              <h2 className="m-0 text-base font-semibold text-site-foreground">
+                Últimas faixas
+              </h2>
+              <MusicIcon />
             </div>
-          )}
 
-          {!loading && lastfm && lastfm.tracks.length > 0 && (
-            <ul className="m-0 flex list-none flex-col gap-3 p-0">
-              {lastfm.tracks.slice(0, 4).map((track, index) => (
-                <TrackRow
-                  key={`${track.name}-${track.artist}-${
-                    track.playedAt ?? track.url
-                  }-${index}`}
-                  track={track}
-                />
-              ))}
-            </ul>
-          )}
+            {loading && (
+              <div className="space-y-3">
+                {[0, 1, 2].map((item) => (
+                  <div
+                    key={item}
+                    className="h-10 animate-pulse rounded bg-site-card-hover"
+                  />
+                ))}
+              </div>
+            )}
 
-          {!loading && (!lastfm || lastfm.tracks.length === 0) && (
-            <p className="m-0 text-sm text-site-body-muted">
-              Sem histórico recente para mostrar.
-            </p>
-          )}
+            {!loading && lastfm && lastfm.tracks.length > 0 && (
+              <ul className="m-0 flex list-none flex-col gap-3 p-0">
+                {lastfm.tracks.slice(0, 4).map((track, index) => (
+                  <TrackRow
+                    key={`${track.name}-${track.artist}-${
+                      track.playedAt ?? track.url
+                    }-${index}`}
+                    track={track}
+                  />
+                ))}
+              </ul>
+            )}
+
+            {!loading && (!lastfm || lastfm.tracks.length === 0) && (
+              <p className="m-0 text-sm text-site-body-muted">
+                Sem histórico recente para mostrar.
+              </p>
+            )}
+          </Card>
         </FadeIn>
       </div>
     </section>

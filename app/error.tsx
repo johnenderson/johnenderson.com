@@ -1,9 +1,9 @@
 'use client';
 
-import Link from 'next/link';
 import { ReactNode, useEffect } from 'react';
 
 import { PageWrapper } from './components/PageWrapper';
+import { Card } from '@/base/components/Card';
 
 const RetryIcon = () => (
   <svg
@@ -31,8 +31,8 @@ const HomeIcon = () => (
   </svg>
 );
 
-const cardClassName =
-  'interactive-card article-card-glass group block w-full rounded-md border border-site-border-muted p-4 text-left no-underline focus-visible:outline-none';
+const cardContentClassName =
+  'article-card-glass group w-full p-4 text-left focus-visible:outline-none';
 
 const CardContent = ({
   icon,
@@ -96,10 +96,12 @@ export default function Error({ error, reset }: ErrorProps) {
             </div>
 
             <div className="grid gap-3 sm:grid-cols-2">
-              <button
+              <Card
+                as="button"
                 type="button"
                 onClick={reset}
-                className={`${cardClassName} cursor-pointer`}
+                interactive
+                className={`${cardContentClassName} cursor-pointer`}
               >
                 <CardContent
                   icon={<RetryIcon />}
@@ -107,15 +109,15 @@ export default function Error({ error, reset }: ErrorProps) {
                   title="Tentar novamente"
                   description="Recarrega esta página e tenta de novo."
                 />
-              </button>
-              <Link href="/" className={cardClassName}>
+              </Card>
+              <Card href="/" interactive className={cardContentClassName}>
                 <CardContent
                   icon={<HomeIcon />}
                   eyebrow="Página inicial"
                   title="Voltar para a home"
                   description="Comece de novo a partir do início do site."
                 />
-              </Link>
+              </Card>
             </div>
           </section>
         </div>

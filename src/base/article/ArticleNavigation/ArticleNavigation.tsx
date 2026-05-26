@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { FC } from 'react';
 
+import { Card } from '@/base/components/Card';
 import { ArticleNavigation as ArticleNavigationType } from '@/features/articles/lib/articles';
 
 type ArticleNavigationProps = {
@@ -14,9 +15,10 @@ const NavigationCard = ({
   article: NonNullable<ArticleNavigationType['older']>;
   eyebrow: string;
 }) => (
-  <Link
+  <Card
     href={`/${article.slug}`}
-    className="interactive-card article-card-glass group block rounded-md border border-site-border-muted p-4 no-underline focus-visible:outline-none"
+    interactive
+    className="article-card-glass group p-4 focus-visible:outline-none"
   >
     <div className="article-card-content flex items-start gap-3">
       {article.icon ? (
@@ -36,7 +38,7 @@ const NavigationCard = ({
         </p>
       </div>
     </div>
-  </Link>
+  </Card>
 );
 
 export const ArticleNavigation: FC<ArticleNavigationProps> = ({

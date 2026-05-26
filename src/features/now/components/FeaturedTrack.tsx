@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { faSpotify } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import { Card } from '@/base/components/Card';
 import { MusicFallback } from '@/features/now/components/MusicFallback';
 import { LastfmTrack } from '@/types/Lastfm';
 
@@ -14,7 +15,10 @@ export const FeaturedTrack = ({ track }: { track: LastfmTrack }) => {
       : null;
 
   return (
-    <div className="interactive-card grid max-w-md grid-cols-[6.5rem_1fr] items-start gap-4 rounded-md border border-site-border-muted bg-site-card p-4 transition-colors hover:border-site-primary">
+    <Card
+      interactive
+      className="grid max-w-md grid-cols-[6.5rem_1fr] items-start gap-4 p-4 transition-colors hover:border-site-primary"
+    >
       <Link
         href={spotifyHref ?? track.url}
         target="_blank"
@@ -54,7 +58,7 @@ export const FeaturedTrack = ({ track }: { track: LastfmTrack }) => {
             href={track.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="block truncate text-xl font-bold leading-tight text-site-foreground no-underline transition-colors hover:text-site-primary-hover focus-visible:text-site-primary-hover focus-visible:outline-none"
+            className="inline-block max-w-full truncate align-top text-xl font-bold leading-tight text-site-foreground no-underline decoration-transparent transition-colors hover:text-site-primary-hover focus-visible:text-site-primary-hover focus-visible:outline-none"
           >
             {track.name}
           </Link>
@@ -84,6 +88,6 @@ export const FeaturedTrack = ({ track }: { track: LastfmTrack }) => {
           </p>
         ) : null}
       </div>
-    </div>
+    </Card>
   );
 };
