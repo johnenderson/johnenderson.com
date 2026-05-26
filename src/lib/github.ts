@@ -100,14 +100,6 @@ type GithubEvent = {
   };
 };
 
-type GithubCommitResponse = {
-  html_url?: string;
-  commit?: {
-    message?: string;
-    author?: { date?: string };
-  };
-};
-
 const CONTRIBUTIONS_QUERY = `
   query ($login: String!) {
     user(login: $login) {
@@ -408,39 +400,6 @@ const fetchLastActivity = async (
   const commits = push.payload?.commits ?? [];
   const lastCommit = commits[commits.length - 1];
   const sha = lastCommit?.sha ?? push.payload?.head;
-
-  if (sha) {
-    const commitResponse = await fetch(
-      `${GITHUB_API_URL}/repos/${push.repo.name}/commits/${sha}`,
-      {
-        cache: 'no-store',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          Accept: 'application/vnd.github+json',
-        },
-      },
-    );
-
-    if (commitResponse.ok) {
-      const commit = (await commitResponse.json()) as GithubCommitResponse;
-      const message = (commit.commit?.message ?? lastCommit?.message ?? '')
-        .split('\n')[0]
-        .trim();
-
-      return {
-        repo: push.repo.name,
-        message: message || 'Novo commit',
-        url:
-          commit.html_url ??
-          `https://github.com/${push.repo.name}/commit/${sha}`,
-        at:
-          commit.commit?.author?.date ??
-          push.created_at ??
-          new Date().toISOString(),
-      };
-    }
-  }
-
   const message = (lastCommit?.message ?? '').split('\n')[0].trim();
 
   return {

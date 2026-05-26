@@ -186,9 +186,35 @@ export const getSpotifyArtistImage = async (
   }
 };
 
+const pickBestMatch = (
+  tracks: SpotifyTrack[],
+  trackName: string,
+  artistName: string,
+): SpotifyMatch | null => {
+  const scored = tracks
+    .map((track) => ({
+      track,
+      score: getSpotifyTrackScore(track, trackName, artistName),
+    }))
+    .filter(
+      ({ track, score }) => score > 0 && getLargestImage(track.album?.images),
+    )
+    .sort((a, b) => b.score - a.score);
+
+  const best = scored[0]?.track;
+  const imageUrl = getLargestImage(best?.album?.images);
+
+  if (!imageUrl) return null;
+
+  return {
+    imageUrl,
+    spotifyUrl: best.external_urls?.spotify ?? null,
+  };
+};
+
 /**
- * Busca a melhor capa (e a URL no Spotify) para uma faixa, combinando algumas
- * queries e pontuando os resultados por similaridade de título/artista.
+ * Busca a melhor capa (e a URL no Spotify) para uma faixa.
+ * Tenta primeiro a query precisa; só faz a fuzzy se necessário.
  * Retorna `null` se não houver token, match ou imagem.
  */
 export const getSpotifyTrackImage = async (
@@ -199,35 +225,21 @@ export const getSpotifyTrackImage = async (
 
   if (!accessToken) return null;
 
-  const queries = [
-    `track:"${trackName}" artist:"${artistName}"`,
-    `${trackName} ${artistName}`,
-  ];
-
   try {
-    const tracks = (
-      await Promise.all(
-        queries.map((query) => searchSpotifyTracks(query, accessToken)),
-      )
-    ).flat();
-    const scoredTracks = tracks
-      .map((track) => ({
-        track,
-        score: getSpotifyTrackScore(track, trackName, artistName),
-      }))
-      .filter(
-        ({ track, score }) => score > 0 && getLargestImage(track.album?.images),
-      )
-      .sort((a, b) => b.score - a.score);
-    const track = scoredTracks[0]?.track;
-    const imageUrl = getLargestImage(track?.album?.images);
+    const preciseTracks = await searchSpotifyTracks(
+      `track:"${trackName}" artist:"${artistName}"`,
+      accessToken,
+    );
+    const preciseMatch = pickBestMatch(preciseTracks, trackName, artistName);
 
-    if (!imageUrl) return null;
+    if (preciseMatch) return preciseMatch;
 
-    return {
-      imageUrl,
-      spotifyUrl: track.external_urls?.spotify ?? null,
-    };
+    const fuzzyTracks = await searchSpotifyTracks(
+      `${trackName} ${artistName}`,
+      accessToken,
+    );
+
+    return pickBestMatch(fuzzyTracks, trackName, artistName);
   } catch {
     return null;
   }
