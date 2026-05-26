@@ -8,8 +8,8 @@ Development notes for `ojohn.dev`.
 - Yarn 1.x
 
 ```bash
-nvm install 22.15.0
-nvm use 22.15.0
+nvm install 22.22.2
+nvm use 22.22.2
 
 npm install -g yarn
 yarn install
