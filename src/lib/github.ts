@@ -383,6 +383,14 @@ const fetchPublicEvents = async (
   return (await response.json()) as GithubEvent[];
 };
 
+type GithubCommitResponse = {
+  html_url?: string;
+  commit?: {
+    message?: string;
+    author?: { date?: string };
+  };
+};
+
 const fetchLastActivity = async (
   login: string,
   token: string,
@@ -400,11 +408,55 @@ const fetchLastActivity = async (
   const commits = push.payload?.commits ?? [];
   const lastCommit = commits[commits.length - 1];
   const sha = lastCommit?.sha ?? push.payload?.head;
-  const message = (lastCommit?.message ?? '').split('\n')[0].trim();
+  const messageFromEvent = (lastCommit?.message ?? '').split('\n')[0].trim();
+
+  // Use the message from the push event when available — no extra API call needed.
+  // Fall back to fetching the commit detail only when the event payload omits the
+  // message (e.g. force-pushes or truncated payloads from the GitHub Events API).
+  if (messageFromEvent) {
+    return {
+      repo: push.repo.name,
+      message: messageFromEvent,
+      url: sha
+        ? `https://github.com/${push.repo.name}/commit/${sha}`
+        : `https://github.com/${push.repo.name}`,
+      at: push.created_at ?? new Date().toISOString(),
+    };
+  }
+
+  if (sha) {
+    const commitResponse = await fetch(
+      `${GITHUB_API_URL}/repos/${push.repo.name}/commits/${sha}`,
+      {
+        cache: 'no-store',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/vnd.github+json',
+        },
+      },
+    );
+
+    if (commitResponse.ok) {
+      const commit = (await commitResponse.json()) as GithubCommitResponse;
+      const message = (commit.commit?.message ?? '').split('\n')[0].trim();
+
+      return {
+        repo: push.repo.name,
+        message: message || 'Novo commit',
+        url:
+          commit.html_url ??
+          `https://github.com/${push.repo.name}/commit/${sha}`,
+        at:
+          commit.commit?.author?.date ??
+          push.created_at ??
+          new Date().toISOString(),
+      };
+    }
+  }
 
   return {
     repo: push.repo.name,
-    message: message || 'Novo commit',
+    message: 'Novo commit',
     url: sha
       ? `https://github.com/${push.repo.name}/commit/${sha}`
       : `https://github.com/${push.repo.name}`,
